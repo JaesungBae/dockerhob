@@ -37,7 +37,6 @@
 
 # <GPU>
 GPU?=0
-DOCKER=NV_GPU=$(GPU) nvidia-docker
 #-------------------------------------------------------------------------------
 # JUPYTER=notebook
 # JUPYTER=lab
@@ -70,7 +69,7 @@ pull: ## 레지스트리에서 이미지를 받아옵니다.
 	docker pull $(ARG_IMAGE_NAME)
 
 run: ## 도커 컨테이너를 실행합니다. (랜덤 포트 연결)
-	$(DOCKER) run -d --restart=unless-stopped \
+	docker run -d --gpus $(GPU) --restart=unless-stopped \
 		--name $(ARG_CONTAINER_NAME) \
 		--ipc=host \
 		-h $(ARG_CONTAINER_HOSTNAME) \
@@ -82,7 +81,7 @@ run: ## 도커 컨테이너를 실행합니다. (랜덤 포트 연결)
 		$(ARG_IMAGE_NAME)
 
 runi: ## 도커 컨테이너를 실행합니다. (랜덤 포트 연결. 인터랙티브 모드)
-	$(DOCKER) run -it --restart=unless-stopped \
+	docker run -it --gpus $(GPU) --restart=unless-stopped \
 		--name $(ARG_CONTAINER_NAME) \
 		--ipc=host \
 		-h $(ARG_CONTAINER_HOSTNAME) \
@@ -95,7 +94,7 @@ runi: ## 도커 컨테이너를 실행합니다. (랜덤 포트 연결. 인터�
 		bash
 
 runf: ## 도커 컨테이너를 실행합니다. (고정 포트 연결)
-	$(DOCKER) run -d --restart=unless-stopped \
+	docker run -d --gpus $(GPU) --restart=unless-stopped \
 		--name $(ARG_CONTAINER_NAME) \
 		--ipc=host \
 		-h $(ARG_CONTAINER_HOSTNAME) \
