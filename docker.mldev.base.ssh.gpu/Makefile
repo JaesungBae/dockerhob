@@ -36,7 +36,7 @@
 # PROCESSOR=CPU
 
 # <GPU>
-GPU?=0
+GPU?='"device=0"'
 #-------------------------------------------------------------------------------
 # JUPYTER=notebook
 # JUPYTER=lab
